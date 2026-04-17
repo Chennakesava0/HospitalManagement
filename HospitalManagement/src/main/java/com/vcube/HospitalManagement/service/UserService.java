@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.vcube.HospitalManagement.model.User;
@@ -14,15 +15,15 @@ public class UserService {
 
     @Autowired
     private UserRepository repo;
+    
+    
 
     // 🔹 Save user (Register)
+    @Autowired
+    private PasswordEncoder encoder;
+
     public void saveUser(User user) {
-
-        // default role if not selected
-        if (user.getRole() == null || user.getRole().isEmpty()) {
-            user.setRole("PATIENT");
-        }
-
+        user.setPassword(encoder.encode(user.getPassword())); // ✅ HERE
         repo.save(user);
     }
 
@@ -36,8 +37,14 @@ public class UserService {
         repo.deleteById(id);
     }
 
-    // 🔹 Find by email (for login later)
+ // 🔹 Find by email
     public Optional<User> findByEmail(String email) {
         return repo.findByEmail(email);
+    }
+
+    // 🔹 Find by username (for login)
+    public Optional<User> findByUsername(String username) {
+        return repo.findByUsername(username);
+    
     }
 }

@@ -23,6 +23,7 @@ public class Patient {
     private int age;
     private String gender;
     private String phone;
+    private String disease;
 
     // 📅 Relationship
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)

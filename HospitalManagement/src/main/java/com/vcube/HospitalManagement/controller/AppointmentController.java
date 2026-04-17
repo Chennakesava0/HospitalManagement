@@ -25,7 +25,7 @@ public class AppointmentController {
     @GetMapping
     public String getAllAppointments(Model model) {
         model.addAttribute("appointments", appointmentService.getAllAppointments());
-        return "appointments";
+        return "appointment";
     }
 
     // ➕ Show booking form
@@ -34,7 +34,7 @@ public class AppointmentController {
         model.addAttribute("appointment", new Appointment());
         model.addAttribute("doctors", doctorService.getAllDoctors());
         model.addAttribute("patients", patientService.getAllPatients());
-        return "add-appointment";
+        return "appointmentForm";
     }
 
     // 💾 Save appointment

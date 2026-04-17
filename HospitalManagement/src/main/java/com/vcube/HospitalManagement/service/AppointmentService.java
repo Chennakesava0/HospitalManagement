@@ -1,19 +1,26 @@
 package com.vcube.HospitalManagement.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vcube.HospitalManagement.model.*;
+import com.vcube.HospitalManagement.model.Appointment;
+import com.vcube.HospitalManagement.model.Doctor;
+import com.vcube.HospitalManagement.model.Patient;
 import com.vcube.HospitalManagement.repository.AppointmentRepository;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class AppointmentService {
 
     @Autowired
     private AppointmentRepository repo;
+    
+    public boolean isSlotAvailable(Doctor doctor, LocalDate date, LocalTime time) {
+        return !repo.existsByDoctorAndDateAndTime(doctor, date, time);
+    }
 
     public Appointment saveAppointment(Appointment appointment) {
         return repo.save(appointment);

@@ -19,14 +19,14 @@ public class DoctorController {
     @GetMapping
     public String getAllDoctors(Model model) {
         model.addAttribute("doctors", service.getAllDoctors());
-        return "doctors";
+        return "doctor";
     }
 
     // ================= ADD FORM =================
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("doctor", new Doctor());
-        return "add-doctor";
+        return "doctorForm";
     }
 
     // ================= SAVE =================
@@ -47,6 +47,6 @@ public class DoctorController {
     @GetMapping("/edit/{id}")
     public String editDoctor(@PathVariable Long id, Model model) {
         model.addAttribute("doctor", service.getDoctorById(id));
-        return "add-doctor"; // reuse same form
+        return "doctorForm"; // reuse same form
     }
 }

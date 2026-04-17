@@ -19,14 +19,14 @@ public class PatientController {
     @GetMapping
     public String getAllPatients(Model model) {
         model.addAttribute("patients", service.getAllPatients());
-        return "patients";
+        return "patient";
     }
 
     // ➕ Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("patient", new Patient());
-        return "add-patient";
+        return "patientForm";
     }
 
     // 💾 Save patient
