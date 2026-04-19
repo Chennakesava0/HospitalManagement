@@ -18,6 +18,9 @@ public class Appointment {
     private LocalTime time;
 
     private String status; // BOOKED, COMPLETED, CANCELLED
+    
+    @Column
+    private String email;
 
     // 🔗 Many appointments → one doctor
     @ManyToOne

@@ -18,27 +18,50 @@
 
         <form action="/appointments/save" method="post">
 
-            <input type="date" name="date" class="form-control mb-3">
-            <input type="time" name="time" class="form-control mb-3">
+    <!-- Date Picker (Calendar) -->
+    <input type="date" id="date" name="date" class="form-control mb-3" onchange="showDetails()">
 
-            <select name="doctor.id" class="form-control mb-3">
-                <option th:each="d : ${doctors}" 
-                        th:value="${d.id}" 
-                        th:text="${d.name}">
-                </option>
-            </select>
+    <!-- Time Picker -->
+    <input type="time" id="time" name="time" class="form-control mb-3" onchange="showDetails()">
 
-            <select name="patient.id" class="form-control mb-3">
-                <option th:each="p : ${patients}" 
-                        th:value="${p.id}" 
-                        th:text="${p.name}">
-                </option>
-            </select>
+    <!-- Doctor Dropdown -->
+    <select id="doctor" name="doctor.id" class="form-control mb-3" onchange="showDetails()">
+        <option value="">Select Doctor</option>
+        <option th:each="d : ${doctors}"
+                th:value="${d.id}"
+                th:text="${d.name}">
+        </option>
+    </select>
 
-            <button class="btn btn-success w-100">Book</button>
+    <!-- Patient Dropdown -->
+    <select id="patient" name="patient.id" class="form-control mb-3" onchange="showDetails()">
+        <option value="">Select Patient</option>
+        <option th:each="p : ${patients}"
+                th:value="${p.id}"
+                th:text="${p.name}">
+        </option>
+    </select>
 
-        </form>
-    </div>
+    <input type="email" name="email" class="form-control mb-3" placeholder="Enter Patient Email" required>
+
+    <button class="btn btn-success w-100">Book</button>
+
+</form>
+
+<script>
+function showDetails() {
+
+    let date = document.getElementById("date").value;
+    let time = document.getElementById("time").value;
+
+    let doctorSelect = document.getElementById("doctor");
+    let doctorText = doctorSelect.options[doctorSelect.selectedIndex].text;
+
+    let patientSelect = document.getElementById("patient");
+    let patientText = patientSelect.options[patientSelect.selectedIndex].text;
+}
+   
+</script>    </div>
 
 </div>
 

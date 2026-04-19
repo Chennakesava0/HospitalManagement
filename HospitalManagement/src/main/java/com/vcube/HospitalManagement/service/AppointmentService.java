@@ -11,18 +11,44 @@ import com.vcube.HospitalManagement.model.Appointment;
 import com.vcube.HospitalManagement.model.Doctor;
 import com.vcube.HospitalManagement.model.Patient;
 import com.vcube.HospitalManagement.repository.AppointmentRepository;
+import com.vcube.HospitalManagement.repository.DoctorRepository;
+import com.vcube.HospitalManagement.repository.PatientRepository;
 
 @Service
 public class AppointmentService {
 
     @Autowired
     private AppointmentRepository repo;
+
+    @Autowired
+    private DoctorRepository doctorRepo;
+
+    @Autowired
+    private PatientRepository patientRepo;
+
+    public boolean isSlotAvailableForReschedule(Long id, Doctor doctor, LocalDate date, LocalTime time) {
+        return !repo.existsByDoctorAndDateAndTimeAndIdNot(doctor, date, time, id);
+    }
     
     public boolean isSlotAvailable(Doctor doctor, LocalDate date, LocalTime time) {
         return !repo.existsByDoctorAndDateAndTime(doctor, date, time);
     }
 
+    // 🔥 FIXED SAVE METHOD
     public Appointment saveAppointment(Appointment appointment) {
+
+        // 🔥 Fetch FULL Doctor
+        Doctor doctor = doctorRepo.findById(appointment.getDoctor().getId())
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        // 🔥 Fetch FULL Patient
+        Patient patient = patientRepo.findById(appointment.getPatient().getId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        // 🔥 Set back
+        appointment.setDoctor(doctor);
+        appointment.setPatient(patient);
+
         return repo.save(appointment);
     }
 
@@ -40,6 +66,14 @@ public class AppointmentService {
 
     public List<Appointment> getByDate(LocalDate date) {
         return repo.findByDate(date);
+    }
+    
+    public Appointment getById(Long id) {
+        return repo.findById(id).orElseThrow();
+    }
+
+    public void save(Appointment appointment) {
+        repo.save(appointment);
     }
 
     public void deleteAppointment(Long id) {
