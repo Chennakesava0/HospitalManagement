@@ -19,43 +19,59 @@ public class Config {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private LoginSuccessHandler successHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
             .csrf(csrf -> csrf.disable())
 
-            // ✅ Set custom user details service
             .userDetailsService(userDetailsService)
 
             .authorizeHttpRequests(auth -> auth
-            	    .requestMatchers(
-            	        "/", 
-            	        "/login",
-            	        "/register",
-            	        "/saveUser",
-            	        "/css/**",
-            	        "/js/**",
-            	        "/images/**"
-            	    ).permitAll()
 
-            	    .requestMatchers("/dashboard").authenticated()
+                // ================= PUBLIC =================
+                .requestMatchers(
+                    "/",
+                    "/login",
+                    "/register",
+                    "/saveUser",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**"
+                ).permitAll()
 
-            	    // 🔥 Protect reschedule
-            	    .requestMatchers("/appointments/reschedule/**")
-            	    .hasAnyRole("DOCTOR","ADMIN")
-            	    .anyRequest().authenticated()
-            	)
-            
-                .formLogin(form -> form
+                // ================= DOCTOR ONLY =================
+                .requestMatchers("/doctor/**")
+                .hasAuthority("DOCTOR")
+
+                .requestMatchers("/appointments/approve/**")
+                .hasAuthority("DOCTOR")
+
+                .requestMatchers("/appointments/reject/**")
+                .hasAuthority("DOCTOR")
+
+                // ================= PATIENT RESCHEDULE =================
+                // ⭐ FIX: patient should access this
+                .requestMatchers("/appointments/reschedule/**")
+                .hasAuthority("PATIENT")
+
+                // ================= AUTHENTICATED =================
+                .requestMatchers("/dashboard")
+                .authenticated()
+
+                // ================= EVERYTHING ELSE =================
+                .anyRequest().authenticated()
+            )
+
+            .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-
-                // ✅ After login go to dashboard
-                .defaultSuccessUrl("/dashboard", true)
-
+                .successHandler(successHandler)
                 .failureUrl("/login?error=true")
                 .permitAll()
             )
@@ -69,7 +85,7 @@ public class Config {
         return http.build();
     }
 
-    // ✅ Password encoder
+    // ================= PASSWORD ENCODER =================
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

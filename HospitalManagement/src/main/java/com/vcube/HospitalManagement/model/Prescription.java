@@ -13,6 +13,8 @@ public class Prescription {
 
     private String medicines;
     private String notes;
+    
+    private String details;
 
     // 🔗 One prescription → one appointment
     @OneToOne

@@ -48,6 +48,8 @@ public class AppointmentService {
         // 🔥 Set back
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
+        
+        appointment.setStatus("PENDING");
 
         return repo.save(appointment);
     }
@@ -78,5 +80,9 @@ public class AppointmentService {
 
     public void deleteAppointment(Long id) {
         repo.deleteById(id);
+    }
+    
+    public List<Appointment> getAppointmentsByDoctor(String name) {
+        return repo.findByDoctorName(name);
     }
 }

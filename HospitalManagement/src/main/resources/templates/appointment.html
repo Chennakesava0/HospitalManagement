@@ -43,10 +43,10 @@
 						<td th:text="${a.patient.name}"></td>
 						<td><a th:href="@{/appointments/delete/{id}(id=${a.id})}"
 							class="btn btn-danger btn-sm">Delete</a> <!-- ✅ Only visible for DOCTOR & ADMIN -->
-							<span sec:authorize="hasAnyAuthority('DOCTOR','ADMIN')"> <a
-								th:href="@{/appointments/reschedule/{id}(id=${a.id})}"
-								class="btn btn-warning btn-sm"> Reschedule </a>
-						</span>
+							<a th:if="${a.status != null and a.status.equals('REJECTED')}"
+							th:href="@{'/appointments/reschedule/' + ${a.id}}"
+							class="btn btn-warning btn-sm"> Reschedule </a> <span
+							th:if="${a.status == null or !a.status.equals('REJECTED')}">-</span>
 					</tr>
 				</tbody>
 			</table>

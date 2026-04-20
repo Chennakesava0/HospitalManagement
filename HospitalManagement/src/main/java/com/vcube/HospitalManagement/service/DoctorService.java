@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vcube.HospitalManagement.model.Appointment;
 import com.vcube.HospitalManagement.model.Doctor;
 import com.vcube.HospitalManagement.repository.DoctorRepository;
 
@@ -35,7 +36,15 @@ public class DoctorService {
     }
 
     // Find by name (optional)
+//    public Doctor getDoctorByName(String name) {
+//        return repo.findByName(name).orElse(null);
+//    }
+    
     public Doctor getDoctorByName(String name) {
-        return repo.findByName(name).orElse(null);
+        return repo.findByName(name)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
     }
+    
+    
+    
 }

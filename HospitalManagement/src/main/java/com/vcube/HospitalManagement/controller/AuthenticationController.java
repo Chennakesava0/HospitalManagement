@@ -3,9 +3,7 @@ package com.vcube.HospitalManagement.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.vcube.HospitalManagement.model.User;
 import com.vcube.HospitalManagement.service.UserService;
@@ -16,13 +14,13 @@ public class AuthenticationController {
     @Autowired
     private UserService service;
 
-    // 🔹 Show Login Page
+    // 🔹 Login Page
     @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
 
-    // 🔹 Show Register Page
+    // 🔹 Register Page
     @GetMapping("/register")
     public String registerPage(Model model) {
         model.addAttribute("user", new User());
@@ -36,11 +34,13 @@ public class AuthenticationController {
         return "redirect:/login";
     }
 
-    // 🔹 Dashboard
+    // 🔹 Patient Dashboard
     @GetMapping("/dashboard")
     public String dashboard() {
         return "dashboard";
     }
+
+    
 
     // 🔹 Home redirect
     @GetMapping("/")

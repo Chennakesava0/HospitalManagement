@@ -17,7 +17,7 @@ public class Appointment {
     private LocalDate date;
     private LocalTime time;
 
-    private String status; // BOOKED, COMPLETED, CANCELLED
+    private String status; // PENDING, APPROVED, REJECTED
     
     @Column
     private String email;

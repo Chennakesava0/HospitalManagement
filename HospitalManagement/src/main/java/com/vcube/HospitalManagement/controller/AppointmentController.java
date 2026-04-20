@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.vcube.HospitalManagement.model.Appointment;
 import com.vcube.HospitalManagement.service.AppointmentService;
 import com.vcube.HospitalManagement.service.DoctorService;
-import com.vcube.HospitalManagement.service.EmailService;
 import com.vcube.HospitalManagement.service.PatientService;
 
 @Controller
@@ -27,17 +26,14 @@ public class AppointmentController {
     @Autowired
     private PatientService patientService;
 
-    @Autowired
-    private EmailService emailService;
-
-    // 📄 View all appointments
+    // ================= VIEW ALL =================
     @GetMapping
     public String getAllAppointments(Model model) {
         model.addAttribute("appointments", appointmentService.getAllAppointments());
         return "appointment";
     }
 
-    // ➕ Show booking form
+    // ================= ADD FORM =================
     @GetMapping("/add")
     public String showForm(Model model) {
         model.addAttribute("appointment", new Appointment());
@@ -46,7 +42,7 @@ public class AppointmentController {
         return "appointmentForm";
     }
 
-    // 💾 Save appointment (CREATE)
+    // ================= SAVE =================
     @PostMapping("/save")
     public String saveAppointment(@ModelAttribute Appointment appointment, Model model) {
 
@@ -57,38 +53,30 @@ public class AppointmentController {
         );
 
         if (!available) {
-            model.addAttribute("error", "❌ Slot already booked! Choose another time.");
+            model.addAttribute("error", "❌ Slot already booked!");
             model.addAttribute("doctors", doctorService.getAllDoctors());
             model.addAttribute("patients", patientService.getAllPatients());
             return "appointmentForm";
         }
 
-        Appointment saved = appointmentService.saveAppointment(appointment);
-
-        emailService.sendAppointmentEmail(
-                saved.getEmail(),
-                saved.getDoctor().getName(),
-                saved.getDate().toString(),
-                saved.getTime().toString()
-        );
+        appointmentService.saveAppointment(appointment);
 
         return "redirect:/appointments";
     }
 
-    // 🔄 Show reschedule page
+    // ================= RESCHEDULE PAGE =================
     @GetMapping("/reschedule/{id}")
     public String showRescheduleForm(@PathVariable Long id, Model model) {
-        Appointment appointment = appointmentService.getById(id);
-        model.addAttribute("appointment", appointment);
+        model.addAttribute("appointment", appointmentService.getById(id));
         return "reschedule";
     }
 
-    // 🔄 Reschedule (UPDATE)
+    // ================= RESCHEDULE =================
     @PostMapping("/reschedule")
-    public String rescheduleAppointment(@RequestParam Long id,
-                                        @RequestParam String date,
-                                        @RequestParam String time,
-                                        Model model) {
+    public String reschedule(@RequestParam Long id,
+                             @RequestParam String date,
+                             @RequestParam String time,
+                             Model model) {
 
         Appointment appointment = appointmentService.getById(id);
 
@@ -110,23 +98,16 @@ public class AppointmentController {
 
         appointment.setDate(newDate);
         appointment.setTime(newTime);
+        appointment.setStatus("PENDING");
 
         appointmentService.save(appointment);
-
-        // ✅ Optional email
-        emailService.sendAppointmentEmail(
-                appointment.getEmail(),
-                appointment.getDoctor().getName(),
-                newDate.toString(),
-                newTime.toString()
-        );
 
         return "redirect:/appointments";
     }
 
-    // ❌ Delete appointment
+    // ================= DELETE =================
     @GetMapping("/delete/{id}")
-    public String deleteAppointment(@PathVariable Long id) {
+    public String delete(@PathVariable Long id) {
         appointmentService.deleteAppointment(id);
         return "redirect:/appointments";
     }
