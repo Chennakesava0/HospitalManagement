@@ -45,18 +45,18 @@ public class Config {
 
                 // ================= DOCTOR ONLY =================
                 .requestMatchers("/doctor/**")
-                .hasAuthority("DOCTOR")
-
+                .hasAuthority("ROLE_DOCTOR")
+                
                 .requestMatchers("/appointments/approve/**")
-                .hasAuthority("DOCTOR")
+                .hasAuthority("ROLE_DOCTOR")
 
                 .requestMatchers("/appointments/reject/**")
-                .hasAuthority("DOCTOR")
-
+                .hasAuthority("ROLE_DOCTOR")
+                
                 // ================= PATIENT RESCHEDULE =================
                 // ⭐ FIX: patient should access this
                 .requestMatchers("/appointments/reschedule/**")
-                .hasAuthority("PATIENT")
+                .hasAuthority("ROLE_PATIENT")
 
                 // ================= AUTHENTICATED =================
                 .requestMatchers("/dashboard")

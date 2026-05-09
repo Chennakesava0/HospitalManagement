@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 	            throws IOException {
 
 	        if (auth.getAuthorities().stream()
-	                .anyMatch(a -> a.getAuthority().equals("DOCTOR"))) {
+	                .anyMatch(a -> a.getAuthority().equals("ROLE_DOCTOR"))) {
 
 	            response.sendRedirect("/doctor/dashboard");
 

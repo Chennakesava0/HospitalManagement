@@ -25,8 +25,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
             System.out.println("ROLE: " + auth.getAuthority()); // 🔥 DEBUG
 
-            if (auth.getAuthority().equals("DOCTOR") || 
-                auth.getAuthority().equals("ADMIN")) {
+            if (auth.getAuthority().equals("ROLE_DOCTOR") || 
+            	    auth.getAuthority().equals("ROLE_ADMIN")) {
 
                 response.sendRedirect("/doctor/dashboard");
                 return;
