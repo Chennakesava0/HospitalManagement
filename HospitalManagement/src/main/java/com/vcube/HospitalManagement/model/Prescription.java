@@ -27,45 +27,45 @@ public class Prescription {
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getMedicines() {
-		return medicines;
-	}
-
-	public void setMedicines(String medicines) {
-		this.medicines = medicines;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-	public Appointment getAppointment() {
-		return appointment;
-	}
-
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
-    
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
+//
+//	public String getMedicines() {
+//		return medicines;
+//	}
+//
+//	public void setMedicines(String medicines) {
+//		this.medicines = medicines;
+//	}
+//
+//	public String getNotes() {
+//		return notes;
+//	}
+//
+//	public void setNotes(String notes) {
+//		this.notes = notes;
+//	}
+//
+//	public String getDetails() {
+//		return details;
+//	}
+//
+//	public void setDetails(String details) {
+//		this.details = details;
+//	}
+//
+//	public Appointment getAppointment() {
+//		return appointment;
+//	}
+//
+//	public void setAppointment(Appointment appointment) {
+//		this.appointment = appointment;
+//	}
+//    
     
 }

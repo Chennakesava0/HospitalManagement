@@ -40,77 +40,77 @@ public class Appointment {
     @OneToOne(mappedBy = "appointment")
     private Billing billing;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public LocalTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalTime time) {
-		this.time = time;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-	public Prescription getPrescription() {
-		return prescription;
-	}
-
-	public void setPrescription(Prescription prescription) {
-		this.prescription = prescription;
-	}
-
-	public Billing getBilling() {
-		return billing;
-	}
-
-	public void setBilling(Billing billing) {
-		this.billing = billing;
-	}
-    
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
+//
+//	public LocalDate getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(LocalDate date) {
+//		this.date = date;
+//	}
+//
+//	public LocalTime getTime() {
+//		return time;
+//	}
+//
+//	public void setTime(LocalTime time) {
+//		this.time = time;
+//	}
+//
+//	public String getStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
+//
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
+//
+//	public Doctor getDoctor() {
+//		return doctor;
+//	}
+//
+//	public void setDoctor(Doctor doctor) {
+//		this.doctor = doctor;
+//	}
+//
+//	public Patient getPatient() {
+//		return patient;
+//	}
+//
+//	public void setPatient(Patient patient) {
+//		this.patient = patient;
+//	}
+//
+//	public Prescription getPrescription() {
+//		return prescription;
+//	}
+//
+//	public void setPrescription(Prescription prescription) {
+//		this.prescription = prescription;
+//	}
+//
+//	public Billing getBilling() {
+//		return billing;
+//	}
+//
+//	public void setBilling(Billing billing) {
+//		this.billing = billing;
+//	}
+//    
     
 }
